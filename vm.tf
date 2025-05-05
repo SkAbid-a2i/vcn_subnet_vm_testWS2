@@ -8,7 +8,7 @@ resource "oci_core_instance" "my_vm" {
   # Source details block
   source_details {
     source_type = "image"  # Image source type
-    image_id    = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaaknrel32tnjjo4n3fuodfmxbehhwp336yafixsvm7etw2olsgterq"  # Your image ID
+    image_id    = var.image_id  # Use the image_id variable
   }
 
   metadata = {
