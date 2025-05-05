@@ -22,3 +22,8 @@ variable "region" {
   description = "The OCI region where resources will be created."
   type        = string
 }
+
+variable "compartment_ocid" {
+  description = "The OCID of the compartment where the resources will be created."
+  type        = string
+}
