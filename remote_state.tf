@@ -1,23 +1,18 @@
-# Fetch outputs from Workspace 1 using remote state
-data "terraform_remote_state" "vcn_workspace_state" {
+data "terraform_remote_state" "workspace_1" {
   backend = "remote"
   config = {
-    organization = "your_organization"   # Replace with your organization name
+    organization = "your_organization_name"   # Replace with your organization name
     workspaces = {
-      name = "vcn-workspace"  # Replace with the actual name of Workspace 1
+      name = "vcn_subnet_vm_testWS1"          # Workspace 1 name where VCN and subnet are created
     }
   }
 }
 
-# Output for VM creation
-output "vcn_id_from_workspace_1" {
-  value = data.terraform_remote_state.vcn_workspace_state.outputs.vcn_id
+# Outputs from Workspace 1
+output "subnet_public_id" {
+  value = data.terraform_remote_state.workspace_1.outputs.subnet_public_id
 }
 
-output "subnet_public_id_from_workspace_1" {
-  value = data.terraform_remote_state.vcn_workspace_state.outputs.subnet_public_id
-}
-
-output "subnet_private_id_from_workspace_1" {
-  value = data.terraform_remote_state.vcn_workspace_state.outputs.subnet_private_id
+output "subnet_private_id" {
+  value = data.terraform_remote_state.workspace_1.outputs.subnet_private_id
 }
