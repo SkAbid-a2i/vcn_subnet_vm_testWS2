@@ -1,7 +1,7 @@
 data "terraform_remote_state" "workspace_1" {
   backend = "remote"
   config = {
-    organization = "Ab_Own_Test"   # Replace with your organization name
+    organization = "Ab_OwnVM_Test"   # Replace with your organization name
     workspaces = {
       name = "vcn_subnet_vm_testWS1"          # Workspace 1 name where VCN and subnet are created
     }
