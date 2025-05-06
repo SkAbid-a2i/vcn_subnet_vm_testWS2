@@ -8,11 +8,11 @@ resource "oci_core_instance" "my_vm" {
   # Source details block
   source_details {
     source_type = "image"  # Image source type
-    image_id    = var.image_id  # Use the image_id variable
+    image_id    = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaaknrel32tnjjo4n3fuodfmxbehhwp336yafixsvm7etw2olsgterq"  # Your image ID
   }
 
   metadata = {
-    ssh_authorized_keys = "ssh-rsa YOUR_SSH_PUBLIC_KEY"  # Replace with your SSH public key
+    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCj6YtazSHpf78S++fuBgSkzFJy8E3FgvVFRc3IbcoGAKj9kLvUQd/Bwny0Cb8ZrGcoJGqifrmoupShBXnta3IXfMOYLGJ09Hy7U2BZO4UQ2R5leL32WHvG92mlsJ8LJ51NfVYaSsrUHExZYRRpO79uFsOShKrQuZKR8Wt47hd2Pnkf8A+5BmmmxteVMXjo9HzhYxKjk6Mb0xyxhcChFuTi4A2PcY9QbO/iHlor3p4cqCS5bIV5G4TMLBmleYdemZ/K2PoejCEbqYeEGSWlTDTTl3dBsuEkiuN2s7ZoYVC3zdHyl6t4isWemXYxTNetymBGaT0Sb0/NhVomu5KpZgyx ssh-key-2025-05-06"  # Add your SSH public key here
   }
 
   # Optional: You can add other configuration here such as block storage, network interfaces, etc.
