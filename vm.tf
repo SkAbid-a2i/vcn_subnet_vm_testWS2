@@ -5,10 +5,10 @@ resource "oci_core_instance" "my_vm" {
   display_name        = "MyVMab"  # Instance name
   subnet_id           = data.terraform_remote_state.workspace_1.outputs.subnet_public_id  # Using the subnet ID from Workspace 1
 
-  # Source details block (image_id should be in this block)
+  # Source details block
   source_details {
     source_type = "image"  # Image source type
-    image_id    = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaaknrel32tnjjo4n3fuodfmxbehhwp336yafixsvm7etw2olsgterq"  # Your image ID
+    source_id   = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaaknrel32tnjjo4n3fuodfmxbehhwp336yafixsvm7etw2olsgterq"  # Your image ID
   }
 
   metadata = {
