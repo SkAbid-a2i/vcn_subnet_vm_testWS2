@@ -3,7 +3,12 @@ resource "oci_core_instance" "my_vm" {
   availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"  # Availability Domain (AD)
   shape               = "VM.Standard2.1"  # VM shape (you can change it based on your needs)
   display_name        = "MyVMab"  # Instance name
-  subnet_id           = data.terraform_remote_state.workspace_1.outputs.subnet_public_id  # Using the subnet ID from Workspace 1
+
+  # VNIC configuration (subnet_id moved here)
+  create_vnic_details {
+    subnet_id = data.terraform_remote_state.workspace_1.outputs.subnet_public_id  # Using the subnet ID from Workspace 1
+    assign_public_ip = true  # If you want the VM to have a public IP, you can set this to true
+  }
 
   # Source details block
   source_details {
