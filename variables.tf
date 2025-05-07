@@ -27,8 +27,3 @@ variable "compartment_ocid" {
   description = "The OCID of the compartment where the resources will be created."
   type        = string
 }
-
-variable "image_id" {
-  description = "The OCID of the image to be used for creating instances."
-  type        = string
-}
