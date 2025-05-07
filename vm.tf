@@ -13,7 +13,7 @@ data "oci_core_images" "oracle_linux_images" {
 resource "oci_core_instance" "my_vm" {
   compartment_id      = var.compartment_ocid
   availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"
-  shape               = "VM.Standard.E4.Flex"
+  shape               = "VM.Standard2.1"
   display_name        = "MyVMab"
 
   # Shape configuration for 1 OCPU and 8 GB RAM
