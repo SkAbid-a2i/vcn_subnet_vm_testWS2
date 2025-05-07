@@ -1,3 +1,4 @@
+# vm.tf
 
 # Data source to get the latest Oracle Linux 8 image
 data "oci_core_images" "oracle_linux_images" {
