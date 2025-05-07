@@ -13,14 +13,8 @@ data "oci_core_images" "oracle_linux_images" {
 resource "oci_core_instance" "my_vm" {
   compartment_id      = var.compartment_ocid
   availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"
-  shape               = "VM.Standard2.1"
-  display_name        = "MyVMab"
-
-  # Shape configuration for 1 OCPU and 8 GB RAM
-  shape_config {
-    ocpus         = 1
-    memory_in_gbs = 8
-  }
+  shape               = "VM.Standard2.1"  # Fixed shape, 1 OCPU, ~15 GB RAM
+  display_name        = "MyVMabtf"
 
   # VNIC configuration
   create_vnic_details {
@@ -42,4 +36,9 @@ resource "oci_core_instance" "my_vm" {
 
   # Optional: Specify fault domain for high availability
   fault_domain = "FAULT-DOMAIN-1"
+}
+
+# Output to verify the image OCID being used
+output "selected_image_ocid" {
+  value = data.oci_core_images.oracle_linux_images.images[0].id
 }
