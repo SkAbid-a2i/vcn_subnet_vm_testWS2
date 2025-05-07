@@ -13,8 +13,8 @@ data "oci_core_images" "oracle_linux_images" {
 resource "oci_core_instance" "my_vm" {
   compartment_id      = var.compartment_ocid
   availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"
-  shape               = "VM.Standard2.1"  # Fixed shape, 1 OCPU, ~15 GB RAM
-  display_name        = "MyVMabtf"
+  shape               = "VM.Standard.E2.1"  # Compatible shape, 1 OCPU, ~8 GB RAM
+  display_name        = "MyVMab"
 
   # VNIC configuration
   create_vnic_details {
