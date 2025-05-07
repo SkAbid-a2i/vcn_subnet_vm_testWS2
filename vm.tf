@@ -13,13 +13,13 @@ data "oci_core_images" "oracle_linux_images" {
 resource "oci_core_instance" "my_vm" {
   compartment_id      = var.compartment_ocid
   availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"
-  shape               = "VM.DenseIO.E4.Flex"  # Compatible flexible shape
+  shape               = "VM.Standard.E4.Flex"  # Compatible flexible shape
   display_name        = "MyVMab"
 
   # Shape configuration for 1 OCPU and 8 GB RAM
   shape_config {
     ocpus         = 1
-    memory_in_gbs = 8
+    memory_in_gbs = 16
   }
 
   # VNIC configuration
