@@ -1,24 +1,43 @@
-resource "oci_core_instance" "my_vm" {
-  compartment_id      = var.compartment_ocid  # The compartment where your instance will be created
-  availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"  # Availability Domain (AD)
-  shape               = "VM.Standard2.1"  # VM shape (you can change it based on your needs)
-  display_name        = "MyVMab"  # Instance name
 
-  # VNIC configuration (subnet_id moved here)
-  create_vnic_details {
-    subnet_id = data.terraform_remote_state.workspace_1.outputs.subnet_public_id  # Using the subnet ID from Workspace 1
-    assign_public_ip = true  # If you want the VM to have a public IP, you can set this to true
-  }
-
-  # Source details block
-  source_details {
-    source_type = "image"  # Image source type
-    source_id   = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaaknrel32tnjjo4n3fuodfmxbehhwp336yafixsvm7etw2olsgterq"  # Your image ID
-  }
-
-  metadata = {
-    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCj6YtazSHpf78S++fuBgSkzFJy8E3FgvVFRc3IbcoGAKj9kLvUQd/Bwny0Cb8ZrGcoJGqifrmoupShBXnta3IXfMOYLGJ09Hy7U2BZO4UQ2R5leL32WHvG92mlsJ8LJ51NfVYaSsrUHExZYRRpO79uFsOShKrQuZKR8Wt47hd2Pnkf8A+5BmmmxteVMXjo9HzhYxKjk6Mb0xyxhcChFuTi4A2PcY9QbO/iHlor3p4cqCS5bIV5G4TMLBmleYdemZ/K2PoejCEbqYeEGSWlTDTTl3dBsuEkiuN2s7ZoYVC3zdHyl6t4isWemXYxTNetymBGaT0Sb0/NhVomu5KpZgyx"  # Replace with your SSH public key
-  }
-
-  # Optional: You can add other configuration here such as block storage, network interfaces, etc.
+# Data source to get the latest Oracle Linux 8 image
+data "oci_core_images" "oracle_linux_images" {
+  compartment_id = var.compartment_ocid
+  operating_system = "Oracle Linux"
+  operating_system_version = "8"
+  sort_by = "TIMECREATED"
+  sort_order = "DESC"
 }
+
+# Compute Instance (VM)
+resource "oci_core_instance" "my_vm" {
+  compartment_id      = var.compartment_ocid
+  availability_domain = "CtIH:ap-dcc-gazipur-1-ad-1"
+  shape               = "VM.Standard.E4.Flex"
+  display_name        = "MyVMab"
+
+  # Shape configuration for 1 OCPU and 8 GB RAM
+  shape_config {
+    ocpus         = 1
+    memory_in_gbs = 8
+  }
+
+  # VNIC configuration
+  create_vnic_details {
+    subnet_id        = data.terraform_remote_state.workspace_1.outputs.subnet_public_id
+    assign_public_ip = true
+    display_name     = "vnic-my-vm"
+  }
+
+  # Source details for the VM
+  source_details {
+    source_type = "image"
+    source_id   = data.oci_core_images.oracle_linux_images.images[0].id
+  }
+
+  # Metadata for SSH access
+  metadata = {
+    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC31LmewK1WT57zgFAI6OigT9xTZrltlLn7vLKX/kXQIHw2n50L6YhKj3ewNlLHzsYoKqCsqy9Qo86gsg9i5uLBYhnj2Mz4KUVons4zz1Qkgb6UlPaUx7NCbF9A5RXPYlg73zgg6FdqqjZr02ijlunMZHyrPWK/EbxO2q4eLUrkFWwdADJtwpNwXB/6sgbKVOlJ7oLOsERJk6J4kXK3P7J/0JKHG0BfEwt/EO6ZDlGtpunS+BD3GcDWXr66gy9qKJc0ZKo00D5CSnh6KttQb04nWe43bAVAaGsx35WeIxqvAgndMXiGcwnyrYqiReUXG3+h7ZpAZeuIpGCxHMCXvoyF"
+  }
+
+  # Optional: Specify fault domain for high availability
+  fault_domain = "FAULT-DOMAIN-1"
