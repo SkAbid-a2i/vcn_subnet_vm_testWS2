@@ -41,3 +41,4 @@ resource "oci_core_instance" "my_vm" {
 
   # Optional: Specify fault domain for high availability
   fault_domain = "FAULT-DOMAIN-1"
+}
