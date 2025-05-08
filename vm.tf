@@ -32,8 +32,7 @@ resource "oci_core_instance" "my_vm" {
   # Source details for the VM
   source_details {
     source_type = "image"
-    source_id   = data.oci_core_images.oracle_linux_images.images[0].id
-    default= "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaadnihds4lqrmii4g6izwcwxcpfyevnyim35ixyajxx4jz63jqunsa"
+    source_id   = "ocid1.image.oc15.ap-dcc-gazipur-1.aaaaaaaadnihds4lqrmii4g6izwcwxcpfyevnyim35ixyajxx4jz63jqunsa"
   }
 
   # Metadata for SSH access
